@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search Aggregator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Job Search Aggregator</h1>
+
+        <!-- Search Form -->
+        <form method="POST">
+            <div>
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="{{ request.form.get('location', '') }}">
+            </div>
+            <div>
+                <label for="salary">Salary Range:</label>
+                <input type="text" id="salary" name="salary" value="{{ request.form.get('salary', '') }}">
+            </div>
+            <div>
+                <label for="industry">Industry:</label>
+                <input type="text" id="industry" name="industry" value="{{ request.form.get('industry', '') }}">
+            </div>
+            <button type="submit">Search Jobs</button>
+        </form>
+
+        <h2>Job Listings</h2>
+
+        <!-- Job Listings Table -->
+        {% if jobs %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Salary</th>
+                        <th>Industry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job['title'] }}</td>
+                        <td>{{ job['company'] }}</td>
+                        <td>{{ job['location'] }}</td>
+                        <td>{{ job['salary'] }}</td>
+                        <td>{{ job['industry'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No job listings found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
